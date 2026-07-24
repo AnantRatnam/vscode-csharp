@@ -39,6 +39,22 @@ configuration:
 
     eventResponderTasks:
 
+    - description: Remove "Needs More Info" label when the issue author replies
+      triggerOnOwnActions: false
+      if:
+      - payloadType: Issue_Comment
+      - isAction:
+          action: Created
+      - isIssue
+      - isOpen
+      - isActivitySender:
+          issueAuthor: True
+      - hasLabel:
+          label: Needs More Info
+      then:
+      - removeLabel:
+          label: Needs More Info
+
     - description: Auto-approve/merge automated merge PRs
       triggerOnOwnActions: false
       if:
